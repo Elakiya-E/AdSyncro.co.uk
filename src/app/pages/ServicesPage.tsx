@@ -81,7 +81,7 @@ export default function ServicesPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -113,9 +113,9 @@ export default function ServicesPage() {
       </section>
 
       {/* Industry Solutions List */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-32">
+          <div className="space-y-16">
             {industries.map((industry, index) => (
               <div key={index} id={industry.id} className="scroll-mt-32">
                 <motion.div
@@ -216,7 +216,7 @@ export default function ServicesPage() {
       </section>
 
       {/* How to Choose the Right Solution */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

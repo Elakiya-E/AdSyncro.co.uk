@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Bot, TrendingUp, Target, Zap, Award, Users, ArrowRight, CheckCircle2, BarChart3, Clock, Shield, Hammer } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-import heroImage from '../../assets/hero-image.jpg';
+import heroImage from '@/assets/hero-image.jpg';
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
@@ -85,15 +85,13 @@ export default function HomePage() {
   return (
     <div className="">
       {/* Hero Section */}
-      {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-screen flex items-center">
-        {/* Animated Background */}
+      <section className="relative overflow-hidden min-h-[calc(100vh-80px)] flex items-center py-10 md:py-0">
         {/* Animated Background */}
         <div className="absolute inset-0">
           {/* Blobs removed for cleaner look */}
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               style={{ opacity, scale }}
@@ -233,7 +231,7 @@ export default function HomePage() {
       </section>
 
       {/* Trust Section */}
-      <section className="py-20">
+      <section className="py-8 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Trusted by retrofit specialists, regulated service providers, and growth driven SMEs.</h2>
@@ -264,7 +262,7 @@ export default function HomePage() {
       </section>
 
       {/* Services Overview with Images */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -358,7 +356,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works - Process Timeline */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-12 md:py-24 relative overflow-hidden">
         {/* Background Decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
@@ -393,7 +391,7 @@ export default function HomePage() {
             {/* Timeline Line */}
             <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary"></div>
 
-            <div className="space-y-16">
+            <div className="space-y-10">
               {processSteps.map((step, index) => (
                 <motion.div
                   key={index}
@@ -482,7 +480,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Case Study with Image */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -572,7 +570,7 @@ export default function HomePage() {
       </section>
 
       {/* Why AdSyncro with Benefits */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -659,7 +657,7 @@ export default function HomePage() {
       </section>
 
       {/* Lead Magnet - Free Audit */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -728,7 +726,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer CTA */}
-      <section className="py-24 text-center">
+      <section className="py-12 md:py-24 text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

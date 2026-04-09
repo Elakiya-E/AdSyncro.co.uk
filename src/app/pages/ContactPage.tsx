@@ -1,9 +1,10 @@
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Clock, MessageSquare, Users, Shield, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Clock, MessageSquare, Users, Shield, ArrowRight, Loader2 } from 'lucide-react';
+import { useState, useRef } from 'react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 export default function ContactPage() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     workEmail: '',
@@ -22,14 +23,63 @@ export default function ContactPage() {
     utmContent: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // TODO: Replace with your Google Apps Script Web App URL after deploying
+  const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setIsSubmitting(true);
+    setErrorVisible(false);
+
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Required for Google Apps Script
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: JSON.stringify({
+          ...formData, 
+          type: 'audit',
+          email: formData.workEmail,
+          fullName: formData.fullName,
+          phone: formData.phoneNumber,
+          interest: formData.serviceInterest,
+          timestamp: new Date().toISOString(),
+        })
+      });
+
+      // Since we use no-cors, we can't read the response body as JSON
+      // but we can assume success if the request completes without error
+      setSubmitted(true);
+      setFormData({
+        fullName: '',
+        workEmail: '',
+        phoneNumber: '',
+        company: '',
+        role: '',
+        serviceInterest: '',
+        postcode: '',
+        message: '',
+        consent: false,
+        utmSource: '',
+        utmMedium: '',
+        utmCampaign: '',
+        utmTerm: '',
+        utmContent: ''
+      });
+      setTimeout(() => setSubmitted(false), 8000);
+
+    } catch (error) {
+      console.error('Submission error:', error);
+      setErrorVisible(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -71,7 +121,7 @@ export default function ContactPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-12 md:py-32">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -135,7 +185,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
@@ -169,7 +219,7 @@ export default function ContactPage() {
                   <p>We've received your submission and will get back to you soon.</p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   {/* Hidden Fields for Tracking */}
                   <input type="hidden" name="utmSource" value={formData.utmSource} />
                   <input type="hidden" name="utmMedium" value={formData.utmMedium} />
@@ -320,11 +370,21 @@ export default function ContactPage() {
                   >
                     <button
                       type="submit"
-                      className="w-full px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center gap-2 text-lg"
+                      disabled={isSubmitting}
+                      className={`w-full px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center gap-2 text-lg ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                     >
-                      <Send className="w-5 h-5" />
-                      Get a Free Audit
+                      {isSubmitting ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <Send className="w-5 h-5" />
+                      )}
+                      {isSubmitting ? 'Sending Request...' : 'Get a Free Audit'}
                     </button>
+                    {errorVisible && (
+                      <p className="text-red-500 text-center text-sm mt-3 font-medium">
+                        Sorry, something went wrong. Please try again or call us directly.
+                      </p>
+                    )}
                     <p className="text-center text-sm text-gray-400 mt-3">
                       We’ll respond within 24 hours.
                     </p>

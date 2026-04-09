@@ -100,10 +100,15 @@
 
   html,
   body {
-    @apply bg-[#D9DCE5] text-foreground overflow-x-hidden;
+    @apply bg-background text-foreground;
     background-color: #D9DCE5;
-    /* Explicit fallback */
     font-family: 'Times New Roman', serif;
+    min-height: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    position: relative;
   }
 
   h1,

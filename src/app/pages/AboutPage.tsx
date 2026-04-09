@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Target, Users, Award, TrendingUp, Shield, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-import retrofitCardImage from '../../assets/retrofit-card-final.png';
+import retrofitCardImage from '@/assets/retrofit-card-final.png';
 
 
 export default function AboutPage() {
@@ -54,7 +54,7 @@ export default function AboutPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-12 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -104,7 +104,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why AdSyncro Exists */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-16">
             <motion.div
@@ -165,7 +165,7 @@ export default function AboutPage() {
 
 
       {/* What Makes AdSyncro Different */}
-      < section className="py-24" >
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">What Makes AdSyncro Different</h2>
@@ -193,7 +193,7 @@ export default function AboutPage() {
       </section >
 
       {/* Our Philosophy */}
-      < section className="py-24" >
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
@@ -226,7 +226,7 @@ export default function AboutPage() {
       </section >
 
       {/* Who We Work With */}
-      < section className="py-24" >
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Who We Work With</h2>
@@ -265,7 +265,7 @@ export default function AboutPage() {
       </section >
 
       {/* CTA Section */}
-      < section className="py-24" >
+      <section className="py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -319,7 +319,7 @@ export default function AboutPage() {
             </div>
           </motion.div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
 }

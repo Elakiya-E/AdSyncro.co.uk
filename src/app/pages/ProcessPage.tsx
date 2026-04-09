@@ -142,7 +142,7 @@ export default function ProcessPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -192,9 +192,9 @@ export default function ProcessPage() {
       </section>
 
       {/* Process Steps */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-32">
+          <div className="space-y-16">
             {processSteps.map((step, index) => (
               <motion.div
                 key={index}
@@ -327,7 +327,7 @@ export default function ProcessPage() {
                 {/* Connector Line */}
                 {index < processSteps.length - 1 && (
                   <motion.div
-                    className="flex justify-center my-16"
+                    className="flex justify-center my-8"
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -356,7 +356,7 @@ export default function ProcessPage() {
       </section>
 
       {/* Why It Works */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -411,7 +411,7 @@ export default function ProcessPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

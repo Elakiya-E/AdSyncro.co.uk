@@ -70,7 +70,7 @@ export default function BlogPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -98,7 +98,7 @@ export default function BlogPage() {
       </section>
 
       {/* Content Categories Section */}
-      <section className="py-24">
+      <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="text-3xl font-bold text-foreground mb-6">Content Categories</h2>
@@ -148,7 +148,7 @@ export default function BlogPage() {
 
 
       {/* Featured Articles */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-8">
             <TrendingUp className="w-6 h-6 text-primary" />
@@ -195,7 +195,7 @@ export default function BlogPage() {
       </section>
 
       {/* Built for Search & Scale */}
-      <section className="py-16 border-b border-gray-100">
+      <section className="py-12 border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-full mb-6">
             <Shield className="w-8 h-8 text-primary" />
@@ -220,7 +220,7 @@ export default function BlogPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
