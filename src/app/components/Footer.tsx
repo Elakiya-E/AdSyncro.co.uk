@@ -310,7 +310,7 @@ export default function Footer() {
         {showScrollTop && (
           <motion.button
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 w-12 h-12 bg-white border border-gray-100 text-primary rounded-full flex items-center justify-center shadow-lg hover:shadow-xl z-[60] group"
+            className="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 w-12 h-12 bg-white border border-gray-100 text-primary rounded-full flex items-center justify-center shadow-lg hover:shadow-xl z-[60] group"
             initial={{ opacity: 0, scale: 0, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0, y: 20 }}

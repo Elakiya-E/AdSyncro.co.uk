@@ -85,13 +85,13 @@ export default function HomePage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[calc(100vh-80px)] flex items-center py-10 md:py-0">
+      <section className="relative overflow-hidden min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] flex items-center py-12 lg:py-0">
         {/* Animated Background */}
         <div className="absolute inset-0">
           {/* Blobs removed for cleaner look */}
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               style={{ opacity, scale }}
@@ -150,7 +150,7 @@ export default function HomePage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                className="mt-8 flex items-center gap-6 text-sm text-muted-foreground"
+                className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 text-sm text-muted-foreground"
               >
                 <div className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-primary mr-2" />
@@ -180,7 +180,7 @@ export default function HomePage() {
 
               {/* Floating Cards */}
               <motion.div
-                className="absolute top-8 -right-4 bg-white rounded-lg p-4 shadow-xl border border-gray-100"
+                className="hidden sm:block absolute top-8 -right-4 bg-white rounded-lg p-3 md:p-4 shadow-xl border border-gray-100"
                 animate={{
                   y: [0, -10, 0],
                 }}
@@ -202,7 +202,7 @@ export default function HomePage() {
               </motion.div>
 
               <motion.div
-                className="absolute bottom-8 -left-4 bg-white rounded-lg p-4 shadow-xl border border-gray-100"
+                className="hidden sm:block absolute bottom-8 -left-4 bg-white rounded-lg p-3 md:p-4 shadow-xl border border-gray-100"
                 animate={{
                   y: [0, 10, 0],
                 }}
@@ -399,9 +399,9 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className={`flex items-center gap-8 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+                  className={`flex flex-col lg:items-center gap-8 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
                 >
-                  <div className={`flex-1 ${index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
+                  <div className={`flex-1 text-center ${index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       className="inline-block bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
@@ -663,7 +663,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-primary rounded-3xl p-8 md:p-16 relative overflow-hidden text-white"
+            className="bg-primary rounded-2xl lg:rounded-3xl p-6 lg:p-16 relative overflow-hidden text-white"
           >
             {/* Background Accents */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />

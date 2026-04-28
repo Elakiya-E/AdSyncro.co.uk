@@ -43,7 +43,7 @@ export default function ContactPage() {
           "Content-Type": "text/plain",
         },
         body: JSON.stringify({
-          ...formData, 
+          ...formData,
           type: 'audit',
           email: formData.workEmail,
           fullName: formData.fullName,
@@ -121,7 +121,7 @@ export default function ContactPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-12 md:py-32">
+      <section className="relative overflow-hidden pt-24 pb-12 lg:py-32">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -193,7 +193,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100"
+              className="bg-white rounded-2xl lg:rounded-3xl shadow-xl p-6 lg:p-12 border border-gray-100"
             >
               <h2 className="text-3xl font-bold text-foreground mb-2">
                 Get a Free Audit
