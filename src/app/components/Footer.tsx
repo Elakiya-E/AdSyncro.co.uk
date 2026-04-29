@@ -271,13 +271,13 @@ export default function Footer() {
           </motion.div>
 
           <motion.div
-            className="border-t border-gray-200 mt-8 pt-8"
+            className="border-t border-gray-300 mt-8 pt-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
           >
-            <div className="flex flex-col md:flex-row justify-between items-center text-muted-foreground text-sm px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center text-black text-sm px-4 font-medium">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -294,7 +294,7 @@ export default function Footer() {
                   <Link
                     key={index}
                     to={link.path}
-                    className="hover:text-primary transition-colors hover:underline decoration-primary/30 underline-offset-4"
+                    className="text-black hover:text-primary transition-colors hover:underline decoration-primary/30 underline-offset-4"
                   >
                     {link.name}
                   </Link>
