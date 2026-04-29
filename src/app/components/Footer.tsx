@@ -271,17 +271,18 @@ export default function Footer() {
           </motion.div>
 
           <motion.div
-            className="border-t border-gray-200 mt-4 pt-4 bg-white/50 backdrop-blur-sm rounded-xl px-4"
+            className="mt-6 pt-6 bg-[#000943] rounded-xl px-4 py-4 shadow-xl border border-white/10"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
           >
-            <div className="flex flex-col md:flex-row justify-between items-center text-muted-foreground text-sm">
+            <div className="flex flex-col md:flex-row justify-between items-center text-white/80 text-sm">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
+                className="font-medium"
               >
                 &copy; {new Date().getFullYear()} AdSyncro. All rights reserved.
               </motion.p>
@@ -294,7 +295,7 @@ export default function Footer() {
                   <Link
                     key={index}
                     to={link.path}
-                    className="hover:text-primary transition-colors hover:underline decoration-primary/30 underline-offset-4"
+                    className="text-white hover:text-secondary transition-colors hover:underline decoration-secondary/30 underline-offset-4"
                   >
                     {link.name}
                   </Link>
