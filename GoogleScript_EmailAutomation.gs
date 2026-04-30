@@ -91,14 +91,34 @@ function storeDataInSheet(data) {
 }
 
 function sendEmails(data) {
-  // To Admin
-  var adminBody = "New Lead from website:\n\n" + JSON.stringify(data, null, 2);
-  MailApp.sendEmail(ADMIN_EMAIL, "New Website Submission", adminBody);
+  var isNewsletter = (data.type === 'newsletter');
+  var subject = isNewsletter ? "New Newsletter Subscriber" : "New Website Lead Submission";
   
-  // To Customer
+  // 1. To Admin (info@adsyncro.co.uk)
+  var adminBody = isNewsletter 
+    ? "Someone just subscribed to the newsletter!\n\n" +
+      "Email: " + (data.email || 'N/A') + "\n" +
+      "Date: " + new Date().toLocaleString()
+    : "You have a new lead from the website:\n\n" +
+      "Name: " + (data.fullName || data.name || 'N/A') + "\n" +
+      "Email: " + (data.workEmail || data.email || 'N/A') + "\n" +
+      "Phone: " + (data.phoneNumber || data.phone || 'N/A') + "\n" +
+      "Company: " + (data.company || 'N/A') + "\n" +
+      "Interest: " + (data.serviceInterest || data.interest || 'N/A') + "\n" +
+      "Message: " + (data.message || 'No message provided') + "\n\n" +
+      "--- Full Details ---\n" +
+      JSON.stringify(data, null, 2);
+
+  MailApp.sendEmail(ADMIN_EMAIL, subject, adminBody);
+  
+  // 2. To Customer (Auto-reply)
   var userEmail = data.workEmail || data.email;
   if (userEmail && userEmail.includes('@')) {
-    var userBody = "Hello,\n\nWe have received your submission on AdSyncro. Our team will review your details and contact you within 24 hours.\n\nThank you,\nThe AdSyncro Team";
-    MailApp.sendEmail(userEmail, "Request Received - AdSyncro", userBody, { name: "AdSyncro" });
+    var userSubject = isNewsletter ? "Welcome to AdSyncro Updates!" : "Request Received - AdSyncro";
+    var userBody = isNewsletter
+      ? "Hello,\n\nThank you for subscribing to AdSyncro updates! You'll now be the first to hear about our latest AI marketing insights and service updates.\n\nBest regards,\nThe AdSyncro Team"
+      : "Hello,\n\nWe have received your enquiry on AdSyncro. Our team will review your details and contact you within 24 hours.\n\nThank you for choosing AdSyncro,\nThe AdSyncro Team";
+      
+    MailApp.sendEmail(userEmail, userSubject, userBody, { name: "AdSyncro" });
   }
 }
