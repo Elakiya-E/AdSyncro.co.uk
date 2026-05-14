@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Cookie, Settings, Eye, Shield, CheckCircle2, Info } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function CookiesPage() {
     const sections = [
@@ -92,6 +93,11 @@ export default function CookiesPage() {
 
     return (
         <div className="min-h-screen bg-background">
+            <SEO
+                title="Cookie Policy"
+                description="Our cookie policy explains how we use cookies to provide a better service and how you can manage your preferences."
+                canonical="/cookies"
+            />
             {/* Hero Section */}
             <section className="relative overflow-hidden pt-24 pb-12 lg:py-32 bg-secondary text-white">
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

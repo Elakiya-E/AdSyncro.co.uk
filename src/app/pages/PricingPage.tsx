@@ -1,117 +1,148 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Zap, TrendingUp, Rocket, HelpCircle, DollarSign } from 'lucide-react';
-import { useState } from 'react';
+import { pricingService } from '../services/api';
+import SEO from '../components/SEO';
+
+const iconMap: { [key: string]: any } = {
+  Zap: <Zap className="w-8 h-8" />,
+  TrendingUp: <TrendingUp className="w-8 h-8" />,
+  Rocket: <Rocket className="w-8 h-8" />,
+};
 
 export default function PricingPage() {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const pricingPlans = [
-    {
-      name: 'Starter',
-      subtitle: 'For Early Stage or Pilot Engagements',
-      icon: <Zap className="w-8 h-8" />,
-      description: 'Designed for businesses beginning their automation and performance journey.',
-      monthlyPrice: 'Contact for Pricing',
-      annualPrice: 'Contact for Pricing',
-      color: '#1fb57a',
-      popular: false,
-      features: [
-        'Growth & automation audit',
-        'Core funnel setup',
-        'Basic AI automation workflows',
-        'Essential tracking & reporting',
-        'Monthly performance review',
-      ],
-      bestFor: [
-        'SMEs testing automation',
-        'New retrofit initiatives',
-        'Proof of concept projects',
-      ],
-      cta: 'Get Started',
+  const defaultData = {
+    hero: {
+      title: 'Flexible Engagement Models Built for Scale',
+      description: 'AdSyncro offers transparent, value driven pricing designed to match your growth stage, technical maturity, and compliance requirements. Each engagement focuses on outcomes, automation depth, and long term scalability.'
     },
-    {
-      name: 'Growth',
-      subtitle: 'For Businesses Ready to Scale',
-      icon: <TrendingUp className="w-8 h-8" />,
-      description: 'Built for organizations seeking predictable demand and deeper automation.',
-      monthlyPrice: 'Request Quote',
-      annualPrice: 'Request Quote',
-      color: '#16a5b2',
-      popular: true,
-      features: [
-        'Advanced funnel architecture',
-        'AI driven lead scoring & routing',
-        'Multi channel acquisition setup',
-        'CRM & analytics integrations',
-        'Continuous optimization',
-      ],
-      bestFor: [
-        'Growing SMEs',
-        'Retrofit providers scaling demand',
-        'Regulated services with steady volume',
-      ],
-      cta: 'Request a Quote',
-    },
-    {
-      name: 'Enterprise',
-      subtitle: 'For Complex, Compliance Led Growth',
-      icon: <Rocket className="w-8 h-8" />,
-      description: 'Tailored solutions for organizations with advanced requirements, multiple stakeholders, and strict governance.',
-      monthlyPrice: 'Custom',
-      annualPrice: 'Custom',
-      color: '#1fb57a',
-      popular: false,
-      features: [
-        'Custom automation architecture',
-        'Compliance ready workflows',
-        'Advanced reporting & dashboards',
-        'Dedicated optimization roadmap',
-        'Strategic performance reviews',
-      ],
-      bestFor: [
-        'Large retrofit programs',
-        'Regulated enterprises',
-        'Multi region operations',
-      ],
-      cta: 'Talk to an Expert',
-    },
-  ];
+    pricingPlans: [
+      {
+        name: 'Starter',
+        subtitle: 'For Early Stage or Pilot Engagements',
+        icon: 'Zap',
+        description: 'Designed for businesses beginning their automation and performance journey.',
+        monthlyPrice: 'Contact for Pricing',
+        annualPrice: 'Contact for Pricing',
+        color: '#1fb57a',
+        popular: false,
+        features: [
+          'Growth & automation audit',
+          'Core funnel setup',
+          'Basic AI automation workflows',
+          'Essential tracking & reporting',
+          'Monthly performance review',
+        ],
+        bestFor: [
+          'SMEs testing automation',
+          'New retrofit initiatives',
+          'Proof of concept projects',
+        ],
+        cta: 'Get Started',
+      },
+      {
+        name: 'Growth',
+        subtitle: 'For Businesses Ready to Scale',
+        icon: 'TrendingUp',
+        description: 'Built for organizations seeking predictable demand and deeper automation.',
+        monthlyPrice: 'Request Quote',
+        annualPrice: 'Request Quote',
+        color: '#16a5b2',
+        popular: true,
+        features: [
+          'Advanced funnel architecture',
+          'AI driven lead scoring & routing',
+          'Multi channel acquisition setup',
+          'CRM & analytics integrations',
+          'Continuous optimization',
+        ],
+        bestFor: [
+          'Growing SMEs',
+          'Retrofit providers scaling demand',
+          'Regulated services with steady volume',
+        ],
+        cta: 'Request a Quote',
+      },
+      {
+        name: 'Enterprise',
+        subtitle: 'For Complex, Compliance Led Growth',
+        icon: 'Rocket',
+        description: 'Tailored solutions for organizations with advanced requirements, multiple stakeholders, and strict governance.',
+        monthlyPrice: 'Custom',
+        annualPrice: 'Custom',
+        color: '#1fb57a',
+        popular: false,
+        features: [
+          'Custom automation architecture',
+          'Compliance ready workflows',
+          'Advanced reporting & dashboards',
+          'Dedicated optimization roadmap',
+          'Strategic performance reviews',
+        ],
+        bestFor: [
+          'Large retrofit programs',
+          'Regulated enterprises',
+          'Multi region operations',
+        ],
+        cta: 'Talk to an Expert',
+      },
+    ],
+    faqs: [
+      {
+        question: 'What\'s included in the ad budget?',
+        answer: 'The pricing shown is our management fee. Ad spend is separate and paid directly to the platforms (Google, Facebook, etc.). We recommend a minimum ad budget of £2,000/month for Starter, £5,000/month for Growth, and £10,000+/month for Enterprise.',
+      },
+      {
+        question: 'Is there a contract or minimum commitment?',
+        answer: 'We require a 3-month minimum commitment to allow time for optimization and results. After that, all plans are month-to-month with 30 days notice to cancel.',
+      },
+      {
+        question: 'What kind of results can I expect?',
+        answer: 'While results vary by industry and competition, our clients typically see 2-3x ROI within 6 months. We focus on qualified leads, not just traffic, ensuring you get homeowners ready to retrofit.',
+      },
+      {
+        question: 'Can I upgrade or downgrade my plan?',
+        answer: 'Absolutely! You can upgrade at any time. Downgrades take effect at the start of your next billing cycle.',
+      },
+      {
+        question: 'Do you offer custom packages?',
+        answer: 'Yes! If none of our standard plans fit your needs, we can create a custom package. Contact our sales team to discuss your specific requirements.',
+      },
+      {
+        question: 'What makes AdSyncro different from other agencies?',
+        answer: 'We specialize exclusively in retrofit and green energy marketing. Our team understands EPC data, grant systems, and homeowner psychology. Plus, we leverage AI automation to maximize efficiency and results.',
+      },
+    ],
+    seo: {
+      title: 'Transparent Pricing & Engagement Models',
+      description: 'Find the right growth engagement model for your business. From early-stage pilots to enterprise compliance-led growth.'
+    }
+  };
 
-  const faqs = [
-    {
-      question: 'What\'s included in the ad budget?',
-      answer: 'The pricing shown is our management fee. Ad spend is separate and paid directly to the platforms (Google, Facebook, etc.). We recommend a minimum ad budget of £2,000/month for Starter, £5,000/month for Growth, and £10,000+/month for Enterprise.',
-    },
-    {
-      question: 'Is there a contract or minimum commitment?',
-      answer: 'We require a 3-month minimum commitment to allow time for optimization and results. After that, all plans are month-to-month with 30 days notice to cancel.',
-    },
-    {
-      question: 'What kind of results can I expect?',
-      answer: 'While results vary by industry and competition, our clients typically see 2-3x ROI within 6 months. We focus on qualified leads, not just traffic, ensuring you get homeowners ready to retrofit.',
-    },
-    {
-      question: 'Can I upgrade or downgrade my plan?',
-      answer: 'Absolutely! You can upgrade at any time. Downgrades take effect at the start of your next billing cycle.',
-    },
-    {
-      question: 'Do you offer custom packages?',
-      answer: 'Yes! If none of our standard plans fit your needs, we can create a custom package. Contact our sales team to discuss your specific requirements.',
-    },
-    {
-      question: 'What makes AdSyncro different from other agencies?',
-      answer: 'We specialize exclusively in retrofit and green energy marketing. Our team understands EPC data, grant systems, and homeowner psychology. Plus, we leverage AI automation to maximize efficiency and results.',
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await pricingService.get();
+        if (response.data && response.data.pricingPlans) {
+          setData(response.data);
+        } else {
+          setData(defaultData);
+        }
+      } catch (error) {
+        console.error('Error fetching pricing data:', error);
+        setData(defaultData);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const addOns = [
-    { name: 'Additional Landing Pages', price: '£500/page' },
-    { name: 'Video Ad Creation', price: '£1,500/video' },
-    { name: 'Advanced SEO Package', price: '£2,000/month' },
-    { name: 'Social Media Management', price: '£1,500/month' },
-    { name: 'Content Marketing', price: '£2,500/month' },
-  ];
+  const content = data || defaultData;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -137,6 +168,12 @@ export default function PricingPage() {
 
   return (
     <div className="">
+      <SEO
+        title={content.seo?.title || 'Pricing'}
+        description={content.seo?.description || 'Find the right growth engagement model for your business. From early-stage pilots to enterprise compliance-led growth.'}
+        canonical="/pricing"
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -155,14 +192,17 @@ export default function PricingPage() {
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              Flexible <span className="text-black">Engagement Models</span> Built for Scale
+              {content.hero.title.split('Engagement Models').map((part: string, i: number, arr: string[]) => (
+                <span key={i}>
+                  {part}
+                  {i < arr.length - 1 && <span className="text-black">Engagement Models</span>}
+                </span>
+              ))}
             </h1>
 
             <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              AdSyncro offers transparent, value driven pricing designed to match your growth stage, technical maturity, and compliance requirements. Each engagement focuses on outcomes, automation depth, and long term scalability.
+              {content.hero.description}
             </p>
-
-            {/* Billing Toggle Removed as per new content structure which doesn't emphasize monthly/annual toggle */}
           </motion.div>
         </div>
       </section>
@@ -177,7 +217,7 @@ export default function PricingPage() {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            {pricingPlans.map((plan, index) => (
+            {content.pricingPlans.map((plan: any, index: number) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
@@ -207,45 +247,13 @@ export default function PricingPage() {
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   >
-                    {plan.icon}
+                    {iconMap[plan.icon] || <Zap className="w-8 h-8" />}
                   </motion.div>
 
                   {/* Plan Name */}
                   <h3 className="text-2xl font-bold text-foreground mb-1">{plan.name}</h3>
                   <div className="text-sm text-black font-semibold mb-4 h-10">{plan.subtitle}</div>
                   <p className="text-muted-foreground mb-6 min-h-[48px]">{plan.description}</p>
-
-                  {/* Price Removed/Hidden as per new content structure focus on engagement models */}
-                  {/* <div className="mb-6">
-                    <motion.div
-                      className="flex items-baseline"
-                      key={billingCycle}
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                    >
-                      {typeof plan.monthlyPrice === 'number' ? (
-                        <>
-                          <span className="text-4xl md:text-5xl font-bold text-foreground">
-                            £{billingCycle === 'monthly'
-                              ? plan.monthlyPrice.toLocaleString()
-                              : (typeof plan.annualPrice === 'number' ? Math.floor(plan.annualPrice / 12) : 0).toLocaleString()
-                            }
-                          </span>
-                          <span className="text-muted-foreground ml-2">/month</span>
-                        </>
-                      ) : (
-                        <span className="text-4xl md:text-5xl font-bold text-foreground">
-                          {plan.monthlyPrice}
-                        </span>
-                      )}
-                    </motion.div>
-                    {billingCycle === 'annual' && typeof plan.annualPrice === 'number' && (
-                      <div className="text-sm text-muted-foreground mt-1">
-                        £{plan.annualPrice.toLocaleString()} billed annually
-                      </div>
-                    )}
-                  </div> */}
 
                   {/* CTA Button */}
                   <motion.div
@@ -254,7 +262,7 @@ export default function PricingPage() {
                     className="mb-8"
                   >
                     <Link
-                      to="/contact"
+                      to="/contact-us"
                       className={`block text-center px-6 py-4 rounded-lg transition-all duration-300 bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl`}
                     >
                       {plan.cta}
@@ -265,7 +273,7 @@ export default function PricingPage() {
                   {/* Features */}
                   <div className="space-y-4 mb-8">
                     <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wider">Includes:</div>
-                    {plan.features.map((feature, featureIndex) => (
+                    {plan.features.map((feature: string, featureIndex: number) => (
                       <motion.div
                         key={featureIndex}
                         className="flex items-start gap-3"
@@ -288,7 +296,7 @@ export default function PricingPage() {
                   {/* Best For */}
                   <div className="space-y-4">
                     <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wider">Best For:</div>
-                    {plan.bestFor.map((item, index) => (
+                    {plan.bestFor.map((item: string, index: number) => (
                       <motion.div
                         key={index}
                         className="flex items-start gap-3"
@@ -328,7 +336,7 @@ export default function PricingPage() {
               </div>
               <div>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg font-bold"
                 >
                   Request a Custom Quote
@@ -339,8 +347,6 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
-
-
 
       {/* FAQs */}
       <section className="py-16">
@@ -372,7 +378,7 @@ export default function PricingPage() {
             viewport={{ once: true }}
             className="space-y-6"
           >
-            {faqs.map((faq, index) => (
+            {content.faqs.map((faq: any, index: number) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
@@ -430,8 +436,6 @@ export default function PricingPage() {
             </div>
 
             <div className="relative z-10">
-
-
               <h2 className="text-3xl md:text-5xl font-bold mb-4">
                 Not Sure Where to Start?
               </h2>
@@ -445,7 +449,7 @@ export default function PricingPage() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    to="/contact"
+                    to="/contact-us"
                     className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     Get a Free Audit

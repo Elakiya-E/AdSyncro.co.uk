@@ -19,9 +19,9 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Solutions', path: '/services' },
-    { name: 'Services', path: '/solutions' },
+    { name: 'About', path: '/about-us' },
+    { name: 'Services', path: '/services' },
+    { name: 'Solutions', path: '/solutions' },
     { name: 'Case Studies', path: '/case-studies' },
     { name: 'Process', path: '/process' },
     { name: 'Pricing', path: '/pricing' },
@@ -83,7 +83,7 @@ export default function Header() {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                to="/contact"
+                to="/contact-us"
                 className="px-6 py-3 rounded-lg transition-all duration-200 bg-white text-primary font-bold shadow-md hover:shadow-xl relative overflow-hidden group hover:bg-gray-100"
               >
                 <span className="relative z-10">Get a Free Audit</span>
@@ -182,7 +182,7 @@ export default function Header() {
                 }}
               >
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-center px-6 py-3 rounded-lg bg-white text-primary font-bold shadow-md mt-4 hover:bg-gray-100"
                 >

@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Clock, MessageSquare, Users, Shield, ArrowRight, Loader2 } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import SEO from '../components/SEO';
 
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -120,6 +121,11 @@ export default function ContactPage() {
 
   return (
     <div className="">
+      <SEO
+        title="Contact Us | Get a Free Performance Marketing Audit"
+        description="Contact AdSyncro today for a free digital marketing and automation audit. Our experts in SEO, PPC, and lead generation are ready to help your business scale."
+        canonical="/contact-us"
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-12 lg:py-32">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -328,9 +334,14 @@ export default function ContactPage() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                     >
                       <option value="">Select a service</option>
-                      <option value="retrofit-energy">Retrofit & Energy</option>
-                      <option value="regulated-services">Regulated Services</option>
-                      <option value="digital-growth">Digital Growth (SMEs)</option>
+                      <option value="performance-marketing">Performance Marketing</option>
+                      <option value="seo-services">SEO Services</option>
+                      <option value="ppc-management">PPC Management</option>
+                      <option value="email-marketing">Email Marketing</option>
+                      <option value="native-advertising">Native Advertising</option>
+                      <option value="social-media-ads">Social Media Ads</option>
+                      <option value="b2b-lead-generation">B2B Lead Generation</option>
+                      <option value="web-development">Web Design & Development</option>
                       <option value="not-sure">Not Sure Yet</option>
                     </select>
                   </div>

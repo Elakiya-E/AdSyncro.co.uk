@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
@@ -7,6 +7,8 @@ import CaseStudiesPage from './pages/CaseStudiesPage';
 import ProcessPage from './pages/ProcessPage';
 import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
+import BlogDetailPage from './pages/BlogDetailPage';
+import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
 import CookiesPage from './pages/CookiesPage';
@@ -14,6 +16,18 @@ import TermsPage from './pages/TermsPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import CookieBanner from './components/CookieBanner';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboard from './pages/AdminDashboard';
+
+// Service Pages
+import PerformanceMarketingPage from './pages/services/PerformanceMarketingPage';
+import SEOServicesPage from './pages/services/SEOServicesPage';
+import PPCManagementPage from './pages/services/PPCManagementPage';
+import EmailMarketingPage from './pages/services/EmailMarketingPage';
+import NativeAdvertisingPage from './pages/services/NativeAdvertisingPage';
+import SocialMediaPage from './pages/services/SocialMediaPage';
+import B2BLeadGenPage from './pages/services/B2BLeadGenPage';
+import WebDevelopmentPage from './pages/services/WebDevelopmentPage';
 
 import ScrollToHash from './components/ScrollToHash';
 
@@ -34,17 +48,37 @@ export default function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
+
+            {/* Redirect old routes */}
+            <Route path="/about" element={<Navigate to="/about-us" replace />} />
+            <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
+
+            <Route path="/about-us" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
+
+            {/* Sub-Services */}
+            <Route path="/services/performance-marketing" element={<PerformanceMarketingPage />} />
+            <Route path="/services/seo-services" element={<SEOServicesPage />} />
+            <Route path="/services/ppc-management" element={<PPCManagementPage />} />
+            <Route path="/services/email-marketing" element={<EmailMarketingPage />} />
+            <Route path="/services/native-advertising" element={<NativeAdvertisingPage />} />
+            <Route path="/services/social-media-advertising" element={<SocialMediaPage />} />
+            <Route path="/services/b2b-lead-generation" element={<B2BLeadGenPage />} />
+            <Route path="/services/web-development" element={<WebDevelopmentPage />} />
+
             <Route path="/solutions" element={<SolutionsPage />} />
             <Route path="/case-studies" element={<CaseStudiesPage />} />
             <Route path="/process" element={<ProcessPage />} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/blog/:slug" element={<BlogDetailPage />} />
+            <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
+            <Route path="/contact-us" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/cookies" element={<CookiesPage />} />
             <Route path="/terms" element={<TermsPage />} />
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
         <Footer />

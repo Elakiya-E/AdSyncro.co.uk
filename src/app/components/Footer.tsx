@@ -175,8 +175,9 @@ export default function Footer() {
               </div>
               <ul className="space-y-3">
                 {[
-                  { name: 'About Us', path: '/about' },
-                  { name: 'Services', path: '/solutions' },
+                  { name: 'About Us', path: '/about-us' },
+                  { name: 'Services', path: '/services' },
+                  { name: 'Solutions', path: '/solutions' },
                   { name: 'Case Studies', path: '/case-studies' },
                   { name: 'Pricing', path: '/pricing' },
                 ].map((link, index) => (
@@ -205,10 +206,13 @@ export default function Footer() {
               </div>
               <ul className="space-y-3">
                 {[
-                  { name: 'AI Automation', id: 'ai-automation' },
-                  { name: 'Retrofit Lead Gen', id: 'retrofit' },
-                  { name: 'Paid Media', id: 'paid-media' },
-                  { name: 'SEO & Content', id: 'seo-content' },
+                  { name: 'Performance Marketing', path: '/services/performance-marketing' },
+                  { name: 'SEO Services', path: '/services/seo-services' },
+                  { name: 'PPC Management', path: '/services/ppc-management' },
+                  { name: 'Email Marketing', path: '/services/email-marketing' },
+                  { name: 'Native Advertising', path: '/services/native-advertising' },
+                  { name: 'Social Media Ads', path: '/services/social-media-advertising' },
+                  { name: 'B2B Lead Gen', path: '/services/b2b-lead-generation' },
                 ].map((service, index) => (
                   <motion.li
                     key={index}
@@ -219,7 +223,7 @@ export default function Footer() {
                     whileHover={{ x: 5 }}
                     className="text-muted-foreground group cursor-pointer"
                   >
-                    <Link to={`/solutions#${service.id}`} className="flex items-center w-full">
+                    <Link to={service.path} className="flex items-center w-full">
                       <div className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2 group-hover:bg-primary group-hover:scale-125 transition-all"></div>
                       <span className="group-hover:text-foreground transition-colors">{service.name}</span>
                     </Link>

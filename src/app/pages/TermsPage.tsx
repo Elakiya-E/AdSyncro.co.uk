@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Gavel, Scale, FileText, Shield, Globe, Lock, Info, CheckCircle2 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function TermsPage() {
     const sections = [
@@ -94,6 +95,11 @@ export default function TermsPage() {
 
     return (
         <div className="min-h-screen bg-background">
+            <SEO
+                title="Terms & Conditions"
+                description="Please read our terms and conditions carefully to understand your rights and responsibilities when using our website and services."
+                canonical="/terms"
+            />
             {/* Hero Section */}
             <section className="relative overflow-hidden pt-24 pb-12 lg:py-32 bg-primary text-white">
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

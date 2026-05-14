@@ -1,0 +1,491 @@
+const db = require('./db');
+
+const seedData = async () => {
+    try {
+        console.log('Starting local data seeding...');
+
+        // Clear existing data
+        await db.clearAll();
+
+        // About Page Data
+        await db.update('about', {
+            hero: {
+                title: 'Built for Intelligent, Scalable Growth',
+                description: 'AdSyncro is an AI powered growth automation platform designed to help businesses grow with precision, efficiency, and confidence. We exist to replace fragmented marketing efforts with intelligent systems that scale.',
+                image: 'https://images.unsplash.com/photo-1683770997177-0603bd44d070?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB0ZWFtJTIwb2ZmaWNlfGVufDF8fHx8MTc2NjQ3NzEwOHww&ixlib=rb-4.1.0&q=80&w=1080'
+            },
+            whyExists: {
+                title: 'Why AdSyncro Exists',
+                descriptionLines: [
+                    'Growth today is complex. Businesses face rising acquisition costs, fragmented data, compliance pressures, and limited operational bandwidth.',
+                    'AdSyncro was built to solve this.',
+                    'We combine automation, AI optimization, and sector expertise to create growth systems that are measurable, compliant, and designed for long term performance.'
+                ]
+            },
+            focusAreas: [
+                'AI powered growth automation',
+                'Retrofit & energy demand systems',
+                'Compliance ready growth frameworks',
+                'Scalable digital growth for SMEs'
+            ],
+            differentiators: [
+                {
+                    title: 'Platform First Approach',
+                    description: 'AdSyncro is built as a connected system — not isolated tactics. Every workflow, insight, and optimization feeds into a single growth engine.',
+                    icon: 'Target'
+                },
+                {
+                    title: 'AI Driven by Design',
+                    description: 'From lead scoring to performance optimization, AI powers decision making across the funnel.',
+                    icon: 'Zap'
+                },
+                {
+                    title: 'Sector Specific Expertise',
+                    description: 'We specialize in retrofit & energy, regulated services, and growth focused SMEs — industries where precision matters.',
+                    icon: 'Award'
+                },
+                {
+                    title: 'Compliance & Trust',
+                    description: 'Privacy, governance, and auditability are embedded into every solution.',
+                    icon: 'Shield'
+                }
+            ],
+            philosophy: [
+                { title: 'Intelligent', desc: 'driven by data, not assumptions' },
+                { title: 'Efficient', desc: 'automated where possible' },
+                { title: 'Responsible', desc: 'compliant and transparent' },
+                { title: 'Scalable', desc: 'built to grow with your business' }
+            ],
+            partners: [
+                { name: 'Retrofit & Energy Providers', img: 'https://images.unsplash.com/photo-1631277190979-1704e8c7d574' },
+                { name: 'Regulated Service Organizations', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab' },
+                { name: 'Growth Driven SMEs', img: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7' },
+                { name: 'Strategic B2B Partners', img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c' }
+            ],
+            cta: {
+                title: 'Ready to Build Smarter Growth?',
+                description: 'Discover how AdSyncro can support your growth journey.',
+                buttonText: 'Get a Free Audit'
+            },
+            seo: {
+                title: 'About AdSyncro | Intelligent Growth Automation',
+                description: 'Learn how AdSyncro helps businesses scale with AI-powered growth systems.',
+                keywords: ['growth automation', 'AI marketing', 'retrofit growth']
+            }
+        });
+
+        // Services Data
+        const services = [
+            {
+                title: 'Retrofit & Energy',
+                subtitle: 'Driving High-Intent Homeowner Demand at Scale',
+                description: 'Retrofit and energy businesses operate in a trust-driven, incentive-led market. AdSyncro helps you attract, qualify, and convert homeowners using AI-optimized journeys aligned with grants, subsidies, and compliance requirements.',
+                icon: 'Building2',
+                image: 'https://images.unsplash.com/photo-1631277190979-1704e8c7d574',
+                designedFor: [],
+                whatWeEnable: [
+                    'Homeowner & postcode-level targeting',
+                    'Grant- and incentive-aligned messaging',
+                    'Conversion-focused landing systems',
+                    'Automated lead qualification & routing',
+                    'Performance tracking across the funnel'
+                ],
+                outcomes: [
+                    'Higher quality retrofit leads',
+                    'Reduced acquisition costs',
+                    'Predictable, scalable demand'
+                ],
+                cta: 'Get a Free Retrofit Audit',
+                color: 'var(--secondary)',
+                slug: 'retrofit-energy'
+            },
+            {
+                title: 'Regulated Services',
+                subtitle: 'Compliance-Ready Growth Systems',
+                description: 'For regulated industries, growth must balance performance with precision. AdSyncro provides AI-powered systems built with compliance, data security, and auditability at the core.',
+                icon: 'Shield',
+                image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7',
+                designedFor: [
+                    'Financial services',
+                    'Healthcare',
+                    'Legal & professional services',
+                    'Any compliance-led sector'
+                ],
+                whatWeEnable: [
+                    'Lead validation & filtering',
+                    'Approval-based workflows',
+                    'Privacy-first data handling',
+                    'Audit-ready tracking & reporting',
+                    'Controlled automation'
+                ],
+                outcomes: [
+                    'Safer lead generation',
+                    'Reduced operational risk',
+                    'Transparent, compliant growth'
+                ],
+                cta: 'Request a Compliance-Ready Audit',
+                color: 'var(--primary)',
+                slug: 'regulated-services'
+            },
+            {
+                title: 'Digital Growth (SMEs)',
+                subtitle: 'Automation-Led Scaling for Growing Businesses',
+                description: 'SMEs need efficiency before scale. AdSyncro helps growing businesses implement AI-driven systems that reduce manual work while improving performance.',
+                icon: 'Rocket',
+                image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
+                designedFor: [],
+                whatWeEnable: [
+                    'AI-assisted campaign execution',
+                    'CRM-driven pipelines',
+                    'Automated follow-ups & scoring',
+                    'Real-time performance dashboards'
+                ],
+                outcomes: [
+                    'Faster growth without added headcount',
+                    'Better visibility into performance',
+                    'Scalable, repeatable systems'
+                ],
+                cta: 'Get a Free Growth Audit',
+                color: 'var(--accent)',
+                slug: 'digital-growth-smes'
+            }
+        ];
+        for (const service of services) {
+            await db.insert('services', service);
+        }
+
+        // Case Studies Data
+        const caseStudies = [
+            {
+                title: 'Retrofit Lead Generation at Scale',
+                client: 'Retrofit Energy Provider',
+                industry: 'Retrofit & Energy',
+                challenge: 'The client struggled with inconsistent lead quality, rising acquisition costs, and low homeowner trust despite strong demand for retrofit services.',
+                solution: [
+                    'AI driven homeowner targeting',
+                    'Grant aligned messaging frameworks',
+                    'Conversion optimized landing journeys',
+                    'Automated lead qualification and routing'
+                ],
+                image: 'https://images.unsplash.com/photo-1631277190979-1704e8c7d574?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob21lJTIwaW5zdWxhdGlvbiUyMHJldHJvZml0fGVufDF8fHx8MTc2NjU2MjYwOHww&ixlib=rb-4.1.0&q=80&w=1080',
+                results: [
+                    'Significant improvement in lead quality',
+                    'Higher appointment booking rates',
+                    'Reduced cost per qualified lead'
+                ],
+                testimonial: {
+                    quote: "The quality of leads transformed our operations. We spend less time filtering and more time seeking installs.",
+                    author: "Operations Director",
+                    position: "National Retrofit Provider"
+                },
+                slug: 'retrofit-lead-generation',
+                seo: {
+                    title: 'Case Study: Retrofit Lead Generation | AdSyncro',
+                    description: 'How AI-driven targeting helped a national retrofit provider scale demand.'
+                }
+            },
+            {
+                title: 'Compliance Ready Growth for a Regulated Service Provider',
+                client: 'Regulated Services Firm',
+                industry: 'Regulated Services',
+                challenge: 'Growth initiatives were limited by strict compliance requirements, manual lead checks, and fragmented tracking.',
+                solution: [
+                    'Privacy first automation workflows',
+                    'Lead validation and approval logic',
+                    'Audit ready tracking and reporting',
+                    'Controlled AI optimization'
+                ],
+                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwYW5hbHl0aWNzJTIwZGFzaGJvYXJkfGVufDF8fHx8MTc2NjU1OTA3Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+                results: [
+                    'Safer, compliant lead acquisition',
+                    'Reduced manual processing time',
+                    'Improved visibility across the funnel'
+                ],
+                testimonial: {
+                    quote: "Finally, a growth partner that understands the regulatory environment as well as we do.",
+                    author: "Head of Compliance",
+                    position: "Leading Financial Firm"
+                },
+                slug: 'compliance-ready-growth',
+                seo: {
+                    title: 'Case Study: Regulated Services Growth | AdSyncro',
+                    description: 'Implementing compliance-ready growth systems for financial services.'
+                }
+            },
+            {
+                title: 'Automation Led Scaling for an SME',
+                client: 'Digital Growth SME',
+                industry: 'Digital Growth (SMEs)',
+                challenge: 'The business needed to scale demand without increasing headcount or operational complexity.',
+                solution: [
+                    'AI assisted campaign execution',
+                    'CRM driven pipelines',
+                    'Automated follow ups and scoring',
+                    'Real time performance dashboards'
+                ],
+                image: 'https://images.unsplash.com/photo-1682336869523-2c6859f781cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwbWFya2V0aW5nJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2NjUxMzQ3Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+                results: [
+                    'Faster lead response times',
+                    'Improved conversion rates',
+                    'Scalable, repeatable growth systems'
+                ],
+                testimonial: {
+                    quote: "I've reclaimed my time and doubled my revenue. The system works.",
+                    author: "Founder",
+                    position: "B2B Service Agency"
+                },
+                slug: 'automation-led-scaling',
+                seo: {
+                    title: 'Case Study: SME Growth Automation | AdSyncro',
+                    description: 'Scaling a B2B agency with AI-assisted campaigns and CRM pipelines.'
+                }
+            }
+        ];
+        for (const study of caseStudies) {
+            await db.insert('caseStudies', study);
+        }
+
+        // Pricing Data
+        await db.update('pricing', {
+            hero: {
+                title: 'Flexible Engagement Models Built for Scale',
+                description: 'AdSyncro offers transparent, value driven pricing designed to match your growth stage, technical maturity, and compliance requirements. Each engagement focuses on outcomes, automation depth, and long term scalability.'
+            },
+            pricingPlans: [
+                {
+                    name: 'Starter',
+                    subtitle: 'For Early Stage or Pilot Engagements',
+                    icon: 'Zap',
+                    description: 'Designed for businesses beginning their automation and performance journey.',
+                    monthlyPrice: 'Contact for Pricing',
+                    annualPrice: 'Contact for Pricing',
+                    color: '#1fb57a',
+                    popular: false,
+                    features: [
+                        'Growth & automation audit',
+                        'Core funnel setup',
+                        'Basic AI automation workflows',
+                        'Essential tracking & reporting',
+                        'Monthly performance review',
+                    ],
+                    bestFor: [
+                        'SMEs testing automation',
+                        'New retrofit initiatives',
+                        'Proof of concept projects',
+                    ],
+                    cta: 'Get Started',
+                },
+                {
+                    name: 'Growth',
+                    subtitle: 'For Businesses Ready to Scale',
+                    icon: 'TrendingUp',
+                    description: 'Built for organizations seeking predictable demand and deeper automation.',
+                    monthlyPrice: 'Request Quote',
+                    annualPrice: 'Request Quote',
+                    color: '#16a5b2',
+                    popular: true,
+                    features: [
+                        'Advanced funnel architecture',
+                        'AI driven lead scoring & routing',
+                        'Multi channel acquisition setup',
+                        'CRM & analytics integrations',
+                        'Continuous optimization',
+                    ],
+                    bestFor: [
+                        'Growing SMEs',
+                        'Retrofit providers scaling demand',
+                        'Regulated services with steady volume',
+                    ],
+                    cta: 'Request a Quote',
+                },
+                {
+                    name: 'Enterprise',
+                    subtitle: 'For Complex, Compliance Led Growth',
+                    icon: 'Rocket',
+                    description: 'Tailored solutions for organizations with advanced requirements, multiple stakeholders, and strict governance.',
+                    monthlyPrice: 'Custom',
+                    annualPrice: 'Custom',
+                    color: '#1fb57a',
+                    popular: false,
+                    features: [
+                        'Custom automation architecture',
+                        'Compliance ready workflows',
+                        'Advanced reporting & dashboards',
+                        'Dedicated optimization roadmap',
+                        'Strategic performance reviews',
+                    ],
+                    bestFor: [
+                        'Large retrofit programs',
+                        'Regulated enterprises',
+                        'Multi region operations',
+                    ],
+                    cta: 'Talk to an Expert',
+                },
+            ],
+            faqs: [
+                {
+                    question: 'What\'s included in the ad budget?',
+                    answer: 'The pricing shown is our management fee. Ad spend is separate and paid directly to the platforms (Google, Facebook, etc.). We recommend a minimum ad budget of £2,000/month for Starter, £5,000/month for Growth, and £10,000+/month for Enterprise.',
+                },
+                {
+                    question: 'Is there a contract or minimum commitment?',
+                    answer: 'We require a 3-month minimum commitment to allow time for optimization and results. After that, all plans are month-to-month with 30 days notice to cancel.',
+                },
+                {
+                    question: 'What kind of results can I expect?',
+                    answer: 'While results vary by industry and competition, our clients typically see 2-3x ROI within 6 months. We focus on qualified leads, not just traffic, ensuring you get homeowners ready to retrofit.',
+                },
+                {
+                    question: 'Can I upgrade or downgrade my plan?',
+                    answer: 'Absolutely! You can upgrade at any time. Downgrades take effect at the start of your next billing cycle.',
+                },
+                {
+                    question: 'Do you offer custom packages?',
+                    answer: 'Yes! If none of our standard plans fit your needs, we can create a custom package. Contact our sales team to discuss your specific requirements.',
+                },
+                {
+                    question: 'What makes AdSyncro different from other agencies?',
+                    answer: 'We specialize exclusively in retrofit and green energy marketing. Our team understands EPC data, grant systems, and homeowner psychology. Plus, we leverage AI automation to maximize efficiency and results.',
+                },
+            ],
+            seo: {
+                title: 'Transparent Pricing & Engagement Models | AdSyncro',
+                description: 'Find the right growth engagement model for your business. From early-stage pilots to enterprise compliance-led growth.'
+            }
+        });
+
+        // Solutions Data
+        const solutions = [
+            {
+                title: 'AI Automation',
+                subtitle: 'Intelligent Systems That Work While You Scale',
+                description: 'Our AI automation layer connects marketing, data, and operations to remove manual effort and improve lead quality.',
+                icon: 'Bot',
+                image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995',
+                capabilities: [
+                    'AI chatbots & conversational flows',
+                    'Lead scoring & prioritization',
+                    'CRM integration (HubSpot, Salesforce)',
+                    'Automated follow ups & routing',
+                    'Performance dashboards & reporting'
+                ],
+                businessValue: [
+                    'Faster response times',
+                    'Higher conversion rates',
+                    'Reduced operational load'
+                ],
+                color: 'var(--primary)',
+                slug: 'ai-automation'
+            },
+            {
+                title: 'Retrofit Lead Generation',
+                subtitle: 'Built for Trust, Incentives, and Conversion',
+                description: 'Retrofit markets require precision, clarity, and compliance. We design end to end demand systems aligned with homeowner intent and government incentives.',
+                icon: 'Building2',
+                image: 'https://images.unsplash.com/photo-1631277190979-1704e8c7d574',
+                capabilities: [
+                    'Homeowner & postcode level targeting',
+                    'Grant & subsidy messaging frameworks',
+                    'Conversion optimized landing pages',
+                    'Lead validation & qualification',
+                    'End to end funnel tracking'
+                ],
+                businessValue: [
+                    'Higher intent leads',
+                    'Lower acquisition costs',
+                    'Predictable demand flow'
+                ],
+                color: 'var(--secondary)',
+                slug: 'retrofit-lead-generation'
+            },
+            {
+                title: 'Paid Media',
+                subtitle: 'Data Driven Acquisition Across Channels',
+                description: 'We run performance campaigns optimized by AI insights, not guesswork, ensuring every click feeds into a measurable system.',
+                icon: 'Target',
+                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+                capabilities: [
+                    'Search & display campaigns',
+                    'Social & programmatic media',
+                    'Budget optimization',
+                    'Conversion tracking & attribution'
+                ],
+                businessValue: [
+                    'Smarter spend allocation',
+                    'Improved ROI',
+                    'Clear visibility into performance'
+                ],
+                color: 'var(--accent)',
+                slug: 'paid-media'
+            },
+            {
+                title: 'SEO & Content',
+                subtitle: 'Sustainable Growth Through Search & Authority',
+                description: 'We build long term visibility using intent driven SEO and content designed to convert, not just rank.',
+                icon: 'Search',
+                image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a',
+                capabilities: [
+                    'Keyword & intent research',
+                    'Retrofit & compliance friendly content',
+                    'Technical SEO foundations',
+                    'Performance monitoring'
+                ],
+                businessValue: [
+                    'Compounding organic growth',
+                    'Reduced dependency on ads',
+                    'Stronger brand authority'
+                ],
+                color: 'var(--primary)',
+                slug: 'seo-content'
+            }
+        ];
+        for (const solution of solutions) {
+            await db.insert('solutions', solution);
+        }
+
+        // Blog Data
+        const blogArticles = [
+            {
+                title: 'How AI Improves Retrofit Lead Quality',
+                excerpt: 'Discover how artificial intelligence is transforming homeowner targeting and qualification to drive better conversion rates.',
+                category: 'Retrofit Guides',
+                author: 'Sarah Johnson',
+                date: 'December 20, 2024',
+                readTime: '8 min read',
+                image: 'https://images.unsplash.com/photo-1645027718562-54414cd86f5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9nJTIwd3JpdGluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NjY0NzQwMDN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                slug: 'ai-improves-retrofit-lead-quality',
+                content: 'Full article content here...',
+                seo: {
+                    title: 'AI in Retrofit | AdSyncro Blog',
+                    description: 'Learn how AI improves lead quality in the retrofit sector.'
+                }
+            },
+            {
+                title: 'Building Compliance Ready Growth Systems',
+                excerpt: 'Navigating the complex world of regulations. How to scale operations without compromising on compliance and data security.',
+                category: 'Case Studies',
+                author: 'Compliance Expert',
+                date: 'December 28, 2024',
+                readTime: '6 min read',
+                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwYW5hbHl0aWNzJTIwZGFzaGJvYXJkfGVufDF8fHx8MTc2NjU1OTA3Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+                slug: 'compliance-ready-growth-systems',
+                content: 'Full article content here...',
+                seo: {
+                    title: 'Compliance-Ready Growth | AdSyncro Blog',
+                    description: 'Scale operations safely with compliance-ready systems.'
+                }
+            }
+        ];
+        for (const article of blogArticles) {
+            await db.insert('blogs', article);
+        }
+
+        console.log('Local seeding completed successfully!');
+        process.exit(0);
+    } catch (error) {
+        console.error('Local seeding failed:', error);
+        process.exit(1);
+    }
+};
+
+seedData();

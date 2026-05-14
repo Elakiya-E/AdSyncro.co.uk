@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Bot, TrendingUp, Target, Zap, Award, Users, ArrowRight, CheckCircle2, BarChart3, Clock, Shield, Hammer } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import SEO from '../components/SEO';
 
 import heroImage from '@/assets/hero-image.jpg';
 
@@ -84,6 +85,11 @@ export default function HomePage() {
 
   return (
     <div className="">
+      <SEO
+        title="Performance Marketing & SEO Agency UK"
+        description="AdSyncro is a leading UK performance marketing agency specialising in SEO, PPC, and AI-driven lead generation. We drive ROI for retrofit and regulated industries."
+        canonical="/"
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] flex items-center py-12 lg:py-0">
         {/* Animated Background */}
@@ -110,10 +116,11 @@ export default function HomePage() {
               </motion.div>
 
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground">
-                Where Smart Marketing Meets{' '}
+                AI-Powered{' '}
                 <span className="text-primary inline-block">
-                  Green Innovation
+                  Performance Marketing
                 </span>
+                {' '}Agency UK
               </h1>
 
               <p className="text-xl md:text-2xl mb-8 text-muted-foreground">
@@ -128,7 +135,7 @@ export default function HomePage() {
               >
                 <motion.div variants={itemVariants}>
                   <Link
-                    to="/contact"
+                    to="/contact-us"
                     className="group px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-300 inline-flex items-center justify-center transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     Get a Free Audit
@@ -172,7 +179,7 @@ export default function HomePage() {
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <ImageWithFallback
                   src={heroImage}
-                  alt="AI Marketing Solution"
+                  alt="AI-powered marketing solutions for UK businesses seeking scalable lead generation"
                   className="w-full h-auto"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
@@ -306,7 +313,7 @@ export default function HomePage() {
                   >
                     <ImageWithFallback
                       src={service.image}
-                      alt={service.title}
+                      alt={`${service.title} - ${service.description} for UK businesses`}
                       className="w-full h-full object-cover"
                     />
                   </motion.div>
@@ -491,7 +498,7 @@ export default function HomePage() {
             <div className="absolute inset-0">
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1709715357520-5e1047a2b691?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHRlYW0lMjBtZWV0aW5nfGVufDF8fHx8MTc2NjUzMzE4N3ww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Business Team"
+                alt="Growth driven business team meeting for lead generation and performance audits in the UK"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/75"></div>
@@ -687,7 +694,7 @@ export default function HomePage() {
                   Discover where automation, AI, and smarter targeting can unlock immediate growth opportunities.
                 </p>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold"
                 >
                   Get a Free Audit
@@ -739,7 +746,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg font-semibold w-full sm:w-auto justify-center"
                 >
                   Get a Free Audit
@@ -747,7 +754,7 @@ export default function HomePage() {
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg font-semibold w-full sm:w-auto justify-center"
                 >
                   Request a Quote

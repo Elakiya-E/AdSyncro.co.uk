@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Shield, Mail, Globe, Lock, Eye, FileText, CheckCircle2 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function PrivacyPage() {
     const sections = [
@@ -140,6 +141,11 @@ export default function PrivacyPage() {
 
     return (
         <div className="min-h-screen bg-background">
+            <SEO
+                title="Privacy Policy"
+                description="Learn how AdSyncro UK collects, uses, and protects your personal data in accordance with UK GDPR."
+                canonical="/privacy"
+            />
             {/* Hero Section */}
             <section className="relative overflow-hidden pt-24 pb-12 lg:py-32 bg-primary text-white">
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

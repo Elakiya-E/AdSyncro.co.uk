@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Search, Lightbulb, Hammer, Bot, TrendingUp, Rocket, ArrowRight, CheckCircle2, Clock, Users, Target, BarChart3, Zap } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import SEO from '../components/SEO';
 
 export default function ProcessPage() {
   const processSteps = [
@@ -141,6 +142,11 @@ export default function ProcessPage() {
 
   return (
     <div className="">
+      <SEO
+        title="Our Growth Process | How We Deliver Results"
+        description="Our 6-step growth process (Audit, Strategy, Build, Automate, Optimize, Scale) is built to deliver measurable, compliant, and scalable growth for your business."
+        canonical="/process"
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -300,7 +306,7 @@ export default function ProcessPage() {
                     >
                       <ImageWithFallback
                         src={step.image}
-                        alt={step.title}
+                        alt={`${step.title} - Step ${step.number} of our proven growth automation process`}
                         className="w-full h-auto"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -466,7 +472,7 @@ export default function ProcessPage() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    to="/contact"
+                    to="/contact-us"
                     className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg font-semibold"
                   >
                     Get a Free Audit

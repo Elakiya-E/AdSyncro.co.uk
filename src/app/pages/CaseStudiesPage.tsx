@@ -1,12 +1,19 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { TrendingUp, Users, DollarSign, Clock, ArrowRight, Award, Target, CheckCircle2, Zap } from 'lucide-react';
+import { caseStudyService } from '../services/api';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import SEO from '../components/SEO';
 
 export default function CaseStudiesPage() {
-  const caseStudies = [
+  const [studies, setStudies] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const defaultCaseStudies = [
     {
       id: 1,
+      slug: 'retrofit-lead-generation',
       title: 'Retrofit Lead Generation at Scale',
       client: 'Retrofit Energy Provider',
       industry: 'Retrofit & Energy',
@@ -31,6 +38,7 @@ export default function CaseStudiesPage() {
     },
     {
       id: 2,
+      slug: 'compliance-ready-growth',
       title: 'Compliance Ready Growth for a Regulated Service Provider',
       client: 'Regulated Services Firm',
       industry: 'Regulated Services',
@@ -55,6 +63,7 @@ export default function CaseStudiesPage() {
     },
     {
       id: 3,
+      slug: 'automation-led-scaling',
       title: 'Automation Led Scaling for an SME',
       client: 'Digital Growth SME',
       industry: 'Digital Growth (SMEs)',
@@ -78,6 +87,25 @@ export default function CaseStudiesPage() {
       }
     },
   ];
+
+  useEffect(() => {
+    const fetchStudies = async () => {
+      try {
+        const response = await caseStudyService.getAll();
+        if (response.data && response.data.length > 0) {
+          setStudies(response.data);
+        } else {
+          setStudies(defaultCaseStudies);
+        }
+      } catch (error) {
+        console.error('Error fetching case studies:', error);
+        setStudies(defaultCaseStudies);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStudies();
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -103,6 +131,12 @@ export default function CaseStudiesPage() {
 
   return (
     <div className="">
+      <SEO
+        title="Success Stories & Case Studies"
+        description="Proven results from AI powered growth systems. See how AdSyncro helps retrofit providers, regulated services, and SMEs scale with data-driven marketing."
+        canonical="/case-studies"
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -160,9 +194,9 @@ export default function CaseStudiesPage() {
       <section className="py-12 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
-            {caseStudies.map((study, index) => (
+            {studies.map((study, index) => (
               <motion.div
-                key={study.id}
+                key={study._id || index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -177,7 +211,7 @@ export default function CaseStudiesPage() {
                   viewport={{ once: true }}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  0{study.id}
+                  0{index + 1}
                 </motion.div>
 
                 <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''
@@ -197,7 +231,7 @@ export default function CaseStudiesPage() {
                     >
                       <ImageWithFallback
                         src={study.image}
-                        alt={study.client}
+                        alt={`Success story: ${study.title} for ${study.client} in the ${study.industry} sector`}
                         className="w-full h-auto"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -212,26 +246,6 @@ export default function CaseStudiesPage() {
                       >
                         <span className="text-sm font-semibold text-black">{study.industry}</span>
                       </motion.div>
-
-                      {/* Results Grid */}
-                      {/* Results Grid Removed to adapt to new content structure */}
-                      {/* <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                        <div className="grid grid-cols-2 gap-4">
-                          {study.results.slice(0, 2).map((result, resultIndex) => (
-                            <motion.div
-                              key={resultIndex}
-                              className="text-white"
-                              initial={{ opacity: 0, y: 20 }}
-                              whileInView={{ opacity: 1, y: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ delay: 0.5 + resultIndex * 0.1 }}
-                            >
-                              <div className="text-2xl font-bold">{result.metric}</div>
-                              <div className="text-sm text-gray-300">{result.label}</div>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div> */}
                     </motion.div>
                   </motion.div>
 
@@ -271,20 +285,20 @@ export default function CaseStudiesPage() {
                           <span className="w-2 h-2 bg-secondary rounded-full mr-2"></span>
                           Solution
                         </h3>
-                        <p className="text-muted-foreground pl-4 space-y-2">
-                          {study.solution.map((item, i) => (
+                        <div className="text-muted-foreground pl-4 space-y-2">
+                          {study.solution?.map((item: string, i: number) => (
                             <div key={i} className="flex items-start gap-2">
                               <span className="text-secondary mt-1.5">•</span>
                               <span>{item}</span>
                             </div>
                           ))}
-                        </p>
+                        </div>
                       </div>
                     </div>
 
                     {/* Results Cards */}
                     <div className="grid grid-cols-1 gap-4 mb-8">
-                      {study.results.map((result, resultIndex) => (
+                      {study.results?.map((result: string, resultIndex: number) => (
                         <motion.div
                           key={resultIndex}
                           className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-xl shadow-lg border border-gray-100 flex items-center gap-4"
@@ -307,35 +321,46 @@ export default function CaseStudiesPage() {
                     </div>
 
                     {/* Testimonial */}
-                    <motion.div
-                      className="bg-primary p-6 rounded-2xl text-white"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.4 }}
-                    >
-                      <div className="flex flex-col items-center text-center gap-4">
-                        <motion.div
-                          animate={{
-                            rotate: [0, 5, -5, 0],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                        >
-                          <Award className="w-8 h-8 text-white flex-shrink-0" />
-                        </motion.div>
-                        <div>
-                          <p className="text-gray-300 mb-4 italic">"{study.testimonial.quote}"</p>
+                    {study.testimonial && (
+                      <motion.div
+                        className="bg-primary p-6 rounded-2xl text-white"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        <div className="flex flex-col items-center text-center gap-4">
+                          <motion.div
+                            animate={{
+                              rotate: [0, 5, -5, 0],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                          >
+                            <Award className="w-8 h-8 text-white flex-shrink-0" />
+                          </motion.div>
                           <div>
-                            <div className="font-semibold">{study.testimonial.author}</div>
-                            <div className="text-sm text-gray-400">{study.testimonial.position}</div>
+                            <p className="text-gray-300 mb-4 italic">"{study.testimonial.quote}"</p>
+                            <div>
+                              <div className="font-semibold">{study.testimonial.author}</div>
+                              <div className="text-sm text-gray-400">{study.testimonial.position}</div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </motion.div>
+                      </motion.div>
+                    )}
+
+                    <div className="mt-8">
+                      <Link
+                        to={`/case-studies/${study.slug}`}
+                        className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all"
+                      >
+                        Read Full Case Study <ArrowRight size={20} />
+                      </Link>
+                    </div>
                   </motion.div>
                 </div>
               </motion.div>
@@ -344,7 +369,7 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
-      {/* Process Preview */}
+      {/* Impact Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -459,7 +484,7 @@ export default function CaseStudiesPage() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Get a Free Audit

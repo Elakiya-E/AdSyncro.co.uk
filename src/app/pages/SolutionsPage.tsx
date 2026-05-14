@@ -1,13 +1,27 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Bot, TrendingUp, Target, Zap, CheckCircle2, ArrowRight, Shield, Globe, Cpu, Building2, Search } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { solutionService } from '../services/api';
+import SEO from '../components/SEO';
+
+const iconMap: { [key: string]: any } = {
+    Bot: <Bot className="w-16 h-16" />,
+    Building2: <Building2 className="w-16 h-16" />,
+    Target: <Target className="w-16 h-16" />,
+    Search: <Search className="w-16 h-16" />,
+    Zap: <Zap className="w-16 h-16" />,
+};
 
 export default function SolutionsPage() {
-    const capabilities = [
+    const [capabilities, setCapabilities] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const defaultCapabilities = [
         {
             id: 'ai-automation',
-            icon: <Bot className="w-16 h-16" />,
+            icon: 'Bot',
             title: 'AI Automation',
             subtitle: 'Intelligent Systems That Work While You Scale',
             description: 'Our AI automation layer connects marketing, data, and operations to remove manual effort and improve lead quality.',
@@ -28,7 +42,7 @@ export default function SolutionsPage() {
         },
         {
             id: 'retrofit',
-            icon: <Building2 className="w-16 h-16" />,
+            icon: 'Building2',
             title: 'Retrofit Lead Generation',
             subtitle: 'Built for Trust, Incentives, and Conversion',
             description: 'Retrofit markets require precision, clarity, and compliance. We design end to end demand systems aligned with homeowner intent and government incentives.',
@@ -49,7 +63,7 @@ export default function SolutionsPage() {
         },
         {
             id: 'paid-media',
-            icon: <Target className="w-16 h-16" />,
+            icon: 'Target',
             title: 'Paid Media',
             subtitle: 'Data Driven Acquisition Across Channels',
             description: 'We run performance campaigns optimized by AI insights, not guesswork, ensuring every click feeds into a measurable system.',
@@ -69,7 +83,7 @@ export default function SolutionsPage() {
         },
         {
             id: 'seo-content',
-            icon: <Search className="w-16 h-16" />,
+            icon: 'Search',
             title: 'SEO & Content',
             subtitle: 'Sustainable Growth Through Search & Authority',
             description: 'We build long term visibility using intent driven SEO and content designed to convert, not just rank.',
@@ -89,8 +103,33 @@ export default function SolutionsPage() {
         }
     ];
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await solutionService.getAll();
+                if (response.data && response.data.length > 0) {
+                    setCapabilities(response.data);
+                } else {
+                    setCapabilities(defaultCapabilities);
+                }
+            } catch (error) {
+                console.error('Error fetching solutions:', error);
+                setCapabilities(defaultCapabilities);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
     return (
         <div className="">
+            <SEO
+                title="Core Growth Capabilities"
+                description="Explore AdSyncro's core capabilities: AI Automation, Retrofit Lead Gen, Paid Media, and SEO. Integrated growth systems built to scale."
+                canonical="/solutions"
+            />
+
             {/* Hero Section */}
             <section className="relative overflow-hidden py-10 md:py-16">
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -112,7 +151,7 @@ export default function SolutionsPage() {
                             whileTap={{ scale: 0.95 }}
                         >
                             <Link
-                                to="/contact"
+                                to="/contact-us"
                                 className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg"
                             >
                                 Find Your Solution
@@ -128,7 +167,7 @@ export default function SolutionsPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="space-y-16">
                         {capabilities.map((capability, index) => (
-                            <div key={index} id={capability.id} className="scroll-mt-32">
+                            <div key={index} id={capability.id || capability._id} className="scroll-mt-32">
                                 <motion.div
                                     initial={{ opacity: 0, y: 50 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -144,7 +183,7 @@ export default function SolutionsPage() {
                                             transition={{ duration: 0.6 }}
                                         >
                                             <div style={{ color: capability.color }}>
-                                                {capability.icon}
+                                                {iconMap[capability.icon] || <Bot className="w-16 h-16" />}
                                             </div>
                                         </motion.div>
 
@@ -157,7 +196,7 @@ export default function SolutionsPage() {
                                         <div className="mb-8">
                                             <h4 className="font-bold text-foreground mb-4">Capabilities</h4>
                                             <ul className="space-y-3">
-                                                {capability.capabilities.map((item, idx) => (
+                                                {capability.capabilities.map((item: string, idx: number) => (
                                                     <li key={idx} className="flex items-start gap-3">
                                                         <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                                                         <span className="text-gray-700">{item}</span>
@@ -172,7 +211,7 @@ export default function SolutionsPage() {
                                                 Business Value
                                             </h4>
                                             <ul className="space-y-2">
-                                                {capability.businessValue.map((item, idx) => (
+                                                {capability.businessValue.map((item: string, idx: number) => (
                                                     <li key={idx} className="flex items-center gap-3">
                                                         <span className="w-1.5 h-1.5 bg-primary rounded-full" />
                                                         <span className="text-gray-700 font-medium">{item}</span>
@@ -191,7 +230,7 @@ export default function SolutionsPage() {
                                         >
                                             <ImageWithFallback
                                                 src={capability.image}
-                                                alt={capability.title}
+                                                alt={`${capability.title}: ${capability.subtitle} - Growth solutions by AdSyncro`}
                                                 className="w-full h-auto"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -219,7 +258,7 @@ export default function SolutionsPage() {
                             Each service is connected through a single data and automation layer, ensuring insights flow across campaigns, channels, and teams.
                         </p>
                         <Link
-                            to="/contact"
+                            to="/contact-us"
                             className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg font-semibold"
                         >
                             Get a Free Audit

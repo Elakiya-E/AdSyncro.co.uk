@@ -1,13 +1,28 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Bot, TrendingUp, Target, Zap, CheckCircle2, ArrowRight, BarChart3, MessageSquare, Users, Shield, Globe, Cpu, Building2, Scale, Rocket } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { serviceService } from '../services/api';
+import SEO from '../components/SEO';
+
+const iconMap: { [key: string]: any } = {
+  Building2: <Building2 className="w-16 h-16" />,
+  Shield: <Shield className="w-16 h-16" />,
+  Rocket: <Rocket className="w-16 h-16" />,
+  Bot: <Bot className="w-16 h-16" />,
+  Target: <Target className="w-16 h-16" />,
+  Zap: <Zap className="w-16 h-16" />,
+};
 
 export default function ServicesPage() {
-  const industries = [
+  const [industries, setIndustries] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const defaultIndustries = [
     {
       id: 'retrofit',
-      icon: <Building2 className="w-16 h-16" />,
+      icon: 'Building2',
       title: 'Retrofit & Energy',
       subtitle: 'Driving High-Intent Homeowner Demand at Scale',
       description: 'Retrofit and energy businesses operate in a trust-driven, incentive-led market. AdSyncro helps you attract, qualify, and convert homeowners using AI-optimized journeys aligned with grants, subsidies, and compliance requirements.',
@@ -29,7 +44,7 @@ export default function ServicesPage() {
     },
     {
       id: 'regulated',
-      icon: <Shield className="w-16 h-16" />,
+      icon: 'Shield',
       title: 'Regulated Services',
       subtitle: 'Compliance-Ready Growth Systems',
       description: 'For regulated industries, growth must balance performance with precision. AdSyncro provides AI-powered systems built with compliance, data security, and auditability at the core.',
@@ -57,7 +72,7 @@ export default function ServicesPage() {
     },
     {
       id: 'smes',
-      icon: <Rocket className="w-16 h-16" />,
+      icon: 'Rocket',
       title: 'Digital Growth (SMEs)',
       subtitle: 'Automation-Led Scaling for Growing Businesses',
       description: 'SMEs need efficiency before scale. AdSyncro helps growing businesses implement AI-driven systems that reduce manual work while improving performance.',
@@ -78,8 +93,33 @@ export default function ServicesPage() {
     }
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await serviceService.getAll();
+        if (response.data && response.data.length > 0) {
+          setIndustries(response.data);
+        } else {
+          setIndustries(defaultIndustries);
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        setIndustries(defaultIndustries);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="">
+      <SEO
+        title="Industry Specific AI Growth Solutions"
+        description="Discover AdSyncro's AI-powered growth solutions for Retrofit, Regulated Services, and SMEs. Performance marketing tailored to your industry."
+        canonical="/services"
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -101,7 +141,7 @@ export default function ServicesPage() {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                to="/contact"
+                to="/contact-us"
                 className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg"
               >
                 Find Your Solution
@@ -117,7 +157,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {industries.map((industry, index) => (
-              <div key={index} id={industry.id} className="scroll-mt-32">
+              <div key={index} id={industry.id || industry._id} className="scroll-mt-32">
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -133,7 +173,7 @@ export default function ServicesPage() {
                       transition={{ duration: 0.6 }}
                     >
                       <div style={{ color: industry.color }}>
-                        {industry.icon}
+                        {iconMap[industry.icon] || <Building2 className="w-16 h-16" />}
                       </div>
                     </motion.div>
 
@@ -144,11 +184,11 @@ export default function ServicesPage() {
                     </p>
 
                     {/* Designed For (Only for Regulated) */}
-                    {industry.designedFor && (
+                    {industry.designedFor && industry.designedFor.length > 0 && (
                       <div className="mb-6">
                         <h4 className="font-bold text-foreground mb-3 text-sm uppercase tracking-wider">Designed For</h4>
                         <div className="flex flex-wrap gap-2">
-                          {industry.designedFor.map((item, idx) => (
+                          {industry.designedFor.map((item: string, idx: number) => (
                             <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">
                               {item}
                             </span>
@@ -160,7 +200,7 @@ export default function ServicesPage() {
                     <div className="mb-8">
                       <h4 className="font-bold text-foreground mb-4">What We Enable</h4>
                       <ul className="space-y-3">
-                        {industry.whatWeEnable.map((item, idx) => (
+                        {industry.whatWeEnable.map((item: string, idx: number) => (
                           <li key={idx} className="flex items-start gap-3">
                             <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                             <span className="text-gray-700">{item}</span>
@@ -175,7 +215,7 @@ export default function ServicesPage() {
                         Outcomes
                       </h4>
                       <ul className="space-y-2">
-                        {industry.outcomes.map((item, idx) => (
+                        {industry.outcomes.map((item: string, idx: number) => (
                           <li key={idx} className="flex items-center gap-3">
                             <span className="w-1.5 h-1.5 bg-primary rounded-full" />
                             <span className="text-gray-700 font-medium">{item}</span>
@@ -185,7 +225,7 @@ export default function ServicesPage() {
                     </div>
 
                     <Link
-                      to="/contact"
+                      to="/contact-us"
                       className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg font-semibold"
                     >
                       {industry.cta}
@@ -202,7 +242,7 @@ export default function ServicesPage() {
                     >
                       <ImageWithFallback
                         src={industry.image}
-                        alt={industry.title}
+                        alt={`AI powered growth and lead generation for the ${industry.title} industry`}
                         className="w-full h-auto"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>

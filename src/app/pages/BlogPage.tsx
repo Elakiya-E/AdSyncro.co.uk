@@ -1,9 +1,15 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, TrendingUp, Shield, Zap, RefreshCw, Smartphone, BarChart3, Search, Clock } from 'lucide-react';
+import { blogService } from '../services/api';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import SEO from '../components/SEO';
 
 export default function BlogPage() {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const categories = [
     {
       id: 'retrofit',
@@ -35,9 +41,10 @@ export default function BlogPage() {
     }
   ];
 
-  const featuredArticles = [
+  const defaultArticles = [
     {
       title: 'How AI Improves Retrofit Lead Quality',
+      slug: 'how-ai-improves-retrofit-lead-quality',
       excerpt: 'Discover how artificial intelligence is transforming homeowner targeting and qualification to drive better conversion rates.',
       category: 'Retrofit Guides',
       author: 'Sarah Johnson',
@@ -47,6 +54,7 @@ export default function BlogPage() {
     },
     {
       title: 'Building Compliance Ready Growth Systems',
+      slug: 'building-compliance-ready-growth-systems',
       excerpt: 'Navigating the complex world of regulations. How to scale operations without compromising on compliance and data security.',
       category: 'Case Studies',
       author: 'Compliance Expert',
@@ -56,6 +64,7 @@ export default function BlogPage() {
     },
     {
       title: 'Scaling SMEs with Automation, Not Headcount',
+      slug: 'scaling-smes-with-automation',
       excerpt: 'Learn how small teams are achieving enterprise-level results through smart automation strategies and efficient workflows.',
       category: 'AI & Growth Automation',
       author: 'Growth Strategist',
@@ -65,10 +74,33 @@ export default function BlogPage() {
     },
   ];
 
-
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await blogService.getAll();
+        if (response.data && response.data.length > 0) {
+          setArticles(response.data);
+        } else {
+          setArticles(defaultArticles);
+        }
+      } catch (error) {
+        console.error('Error fetching blog articles:', error);
+        setArticles(defaultArticles);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
 
   return (
     <div className="">
+      <SEO
+        title="Insights & Resources"
+        description="Insights on AI Powered Growth, Retrofit, and Automation. The AdSyncro Blog is your hub for sustainable growth knowledge and performance marketing strategies."
+        canonical="/blog"
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden py-10 md:py-16">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -118,7 +150,7 @@ export default function BlogPage() {
                 className="bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col items-start gap-6 relative overflow-hidden group"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="relative p-4 bg-white rounded-2xl shadow-sm border border-gray-100 inline-block">
+                <div className="relative p-4 bg-white rounded-2xl shadow-sm border border-gray-100 inline-block" style={{ color: "initial" }}>
                   {category.icon}
                 </div>
                 <div className="relative">
@@ -145,18 +177,16 @@ export default function BlogPage() {
         </div>
       </section>
 
-
-
       {/* Featured Articles */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-8">
             <TrendingUp className="w-6 h-6 text-primary" />
-            <h2 className="text-3xl font-bold text-foreground">Featured Articles</h2>
+            <h2 className="text-3xl font-bold text-foreground">{loading ? 'Loading Articles...' : 'Featured Articles'}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredArticles.map((article, index) => (
+            {articles.map((article, index) => (
               <motion.article
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -169,7 +199,7 @@ export default function BlogPage() {
                 <div className="relative h-48 overflow-hidden">
                   <ImageWithFallback
                     src={article.image}
-                    alt={article.title}
+                    alt={`${article.category}: ${article.title} - AdSyncro Insights`}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-primary rounded-full text-xs font-semibold shadow-sm">
@@ -177,15 +207,17 @@ export default function BlogPage() {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                    {article.title}
-                  </h3>
+                  <Link to={`/blog/${article.slug}`}>
+                    <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                      {article.title}
+                    </h3>
+                  </Link>
                   <p className="text-muted-foreground mb-4 text-sm line-clamp-3">
                     {article.excerpt}
                   </p>
                   <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-gray-100">
                     <span className="flex items-center gap-1"><User className="w-3 h-3" /> {article.author}</span>
-                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {article.readTime}</span>
+                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {article.readTime || "5 min read"}</span>
                   </div>
                 </div>
               </motion.article>
@@ -265,7 +297,7 @@ export default function BlogPage() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    to="/contact"
+                    to="/contact-us"
                     className="inline-flex items-center px-10 py-5 bg-white text-primary text-lg font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl"
                   >
                     Get a Free Audit
